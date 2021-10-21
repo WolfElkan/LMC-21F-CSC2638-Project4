@@ -19,16 +19,17 @@ You work for a company that is developing **multi-player card games**.  They hav
     2. For example, your main might look something like what is shown in the 
     textbox below:  
 
-        public static void main(String[] args) {
-            // create 2 cards 
-            Card aboveC = new Card(“Nine”,”Hearts”);
-            Card belowC = new Card(“Nine”,”Diamonds”);
-            // connect the 2 cards
-            aboveC.setBelow(belowC);
-            belowC.setAbove(aboveC);
-            System.out.println(aboveC.getBelow());
-            System.out.println(belowC.getAbove());
-            . . .   // best to test ALL methods that you write
+    public static void main(String[] args) {
+        // create 2 cards 
+        Card aboveC = new Card(“Nine”,”Hearts”);
+        Card belowC = new Card(“Nine”,”Diamonds”);
+        // connect the 2 cards
+        aboveC.setBelow(belowC);
+        belowC.setAbove(aboveC);
+        System.out.println(aboveC.getBelow());
+        System.out.println(belowC.getAbove());
+        // best to test ALL methods that you write
+    }
 
 #### UML class Diagram
 
