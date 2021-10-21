@@ -36,4 +36,7 @@ class Pile {
 	public Card seeCard_end() {
 		
 	}
+	public static void main(String[] args) {
+		FiveOfHearts = new Card(5,)
+	}
 }
