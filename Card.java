@@ -24,8 +24,8 @@ class Card {
 		"Queen",
 		"King",
 	};
-	Card nextCard;
-	Card prevCard;
+	Card next;
+	Card prev;
 	Card (int _value, Suit _suit){
 		suit = _suit;
 		value = _value;
@@ -60,12 +60,21 @@ class Card {
 	public char[] Suit() {
 		int codepoint = 63;
 		switch (suit) {
-			case SPADES   : codepoint = 0x2660;
-			case CLUBS    : codepoint = 0x2663;
-			case HEARTS   : codepoint = 0x2665;
-			case DIAMONDS : codepoint = 0x2666;
+			case SPADES   : codepoint = 0x2660; break;
+			case CLUBS    : codepoint = 0x2663; break;
+			case HEARTS   : codepoint = 0x2665; break;
+			case DIAMONDS : codepoint = 0x2666; break;
 		}
 		return Character.toChars(codepoint);
+	}
+	public String Value() {
+		switch (value) {
+			case  1: return "A";
+			case 11: return "J";
+			case 12: return "Q";
+			case 13: return "K";
+		}
+		return String.valueOf(value);
 	}
 	public String suitName() {
 		switch (suit) {
@@ -82,10 +91,10 @@ class Card {
 		}
 		int codepoint = 0x30;
 		switch (suit) {
-			case SPADES   : codepoint = 0x1f0a0;
-			case HEARTS   : codepoint = 0x1f0b0;
-			case DIAMONDS : codepoint = 0x1f0c0;
-			case CLUBS    : codepoint = 0x1f0d0;
+			case SPADES   : codepoint = 0x1f0a0; break;
+			case HEARTS   : codepoint = 0x1f0b0; break;
+			case DIAMONDS : codepoint = 0x1f0c0; break;
+			case CLUBS    : codepoint = 0x1f0d0; break;
 		}
 		codepoint += value;	
 		if (value >= 12) {
@@ -103,16 +112,20 @@ class Card {
 			return values[value] + " of " + suitName();
 		}
 	}
-	// public String toShortString() {
-	// 	if (value == 0) {
-	// 		return Color() + " " + values[value];
-	// 	} else {
-	// 		return String.valueOf(value) + String.valueOf(Suit());
-	// 	}
-	// }
+	public String toShortString() {
+		if (value == 0) {
+			if (color() == 1) {
+				return "RJ";
+			} else {
+				return "BJ";
+			}
+		} else {
+			return Value() + String.valueOf(Suit());
+		}
+	}
 	public static void main(String[] args) {
 		Card card = new Card(10, Suit.CLUBS);
-		System.out.println(card.toShortString());
+		System.out.println(card.Suit());
 		// System.out.println(Character.toChars(0x2660));
 	}
 }
