@@ -39,6 +39,30 @@ class Card {
 		}
 		return 0;
 	}
+	public int compareTo(Card other) {
+		int myValue = this.value;
+		int yourValue = other.value;
+		if (myValue == 1) {
+			myValue = 14;
+		}
+		if (yourValue == 1) {
+			yourValue = 14;
+		}
+		if (myValue > yourValue) {
+			return 1;
+		} else if (yourValue > myValue) {
+			return -1;
+		} 
+		int mySuit = this.suitRank();
+		int yourSuit = other.suitRank();
+		if (mySuit > yourSuit) {
+			return 1;
+		} else if (yourSuit > mySuit) {
+			return -1;
+		} else {
+			return 0;
+		}
+	}
 	public int color() {
 		switch (suit) {
 			case HEARTS: 
