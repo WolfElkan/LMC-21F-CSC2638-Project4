@@ -1,124 +1,140 @@
 class Pile {
 	Card topCard;
 	Card endCard;
-	int nCards;
+	protected int nCards;
 	public Pile() {
 		topCard = null;
 		endCard = null;
 		nCards = 0;
 	}
-	public void addCard_top(Card card) {
-		nCards++;
-		if (topCard == null) {
-			topCard = card;
-			endCard = card;
+	private Card remove(Card card) {
+		nCards--;
+		if (card.next == null) {
+			endCard = card.prev;
 		} else {
-			topCard.prev = card;
-			card.next = topCard;
-			topCard = card;
+			card.next.prev = card.prev;
+		}
+		if (card.prev == null) {
+			topCard = card.next;
+		} else {
+			card.prev.next = card.next;
+		}
+		card.next = null;
+		card.prev = null;
+		return card;
+	}
+	private void addCard_empty(Card newCard) {
+		if (nCards != 0 || topCard != null || endCard != null) {
+			throw new IllegalStateException("Pile is not empty");
+		} else {
+			topCard = newCard;
+			endCard = newCard;
+			nCards = 1;
 		}
 	}
-	public void addCard_end(Card card) {
-		if (endCard == null) {
-			addCard_top(card); // DRY
+	private void addCard_before(Card indexCard, Card newCard) {
+		if (nCards == 0) {
+			addCard_empty(newCard);
 		} else {
 			nCards++;
-			endCard.next = card;
-			card.prev = endCard;
-			endCard = card;
+			newCard.next = indexCard;
+			if (indexCard.prev != null) {
+				newCard.prev = indexCard.prev;
+				indexCard.prev.next = newCard;
+			} else {
+				topCard = newCard;
+			}
+			indexCard.prev = newCard;
 		}
 	}
-	public Card remCard_top() {
-		nCards--;
-		Card card = topCard;
-		if (nCards > 0) {
-			topCard = topCard.next;
-			topCard.prev = null;
-			card.next = null;
+	private void addCard_behind(Card indexCard, Card newCard) {
+		if (nCards == 0) {
+			addCard_empty(newCard);
+		} else {
+			nCards++;
+			newCard.prev = indexCard;
+			if (indexCard.next != null) {
+				newCard.next = indexCard.next;
+				indexCard.next.prev = newCard;
+			} else {
+				endCard = newCard;
+			}
+			indexCard.next = newCard;
 		}
-		return card;
+	}
+	public Card getCard_at(int index) {
+		if (index >= 0) {
+			int count = 0;
+			Card card = topCard;
+			while (count < index) {
+				card = card.next;
+				count++;
+			}
+			return card;
+		} else {
+			int count = -1;
+			Card card = endCard;
+			while (count > index) {
+				card = card.prev;
+				count--;
+			}
+			return card;
+		}
+	}
+	public void addCard_top(Card card) {
+		addCard_before(topCard, card);
+	}
+	public void addCard_end(Card card) {
+		addCard_behind(endCard, card);
+	}
+	public void addCard_at(Card newCard, int index) {
+		if (index == 0) {
+			addCard_top(newCard);
+		} else if (index == -1) {
+			addCard_end(newCard);
+		} else {
+			addCard_before(getCard_at(index), newCard);
+		}
+	}
+	public void addCard_sort(Card newCard) {
+		if (nCards == 0) {
+			addCard_empty(newCard);
+		} else {
+			Card card = topCard;
+			if (newCard.compareTo(card) == 1) {
+				addCard_top(newCard);
+			} else {
+				while (card.next != null && newCard.compareTo(card.next) == -1) {
+					card = card.next;
+				}
+				addCard_behind(card, newCard);
+			}
+			// while (card.compareTo(newCard) == 1) {
+			// 	System.out.println(card);
+			// 	if (card == null) {
+			// 		addCard_end(newCard);
+			// 		break;
+			// 	}
+			// 	addCard_before(card, newCard);
+			// }
+		}
+		// System.out.println(this);
+	}	
+	public Card remCard_top() {
+		return remove(topCard);
 	}
 	public Card remCard_end() {
-		nCards--;
-		Card card = endCard;
-		if (nCards > 0) {
-			endCard = endCard.prev;
-			endCard.next = null;
-			card.prev = null;
-		}
-		return card;
+		return remove(endCard);
 	}
-	public Card seeCard_top() {
+	public Card getCard_top() {
 		return topCard;
 	}
-	public Card seeCard_end() {
+	public Card getCard_end() {
 		return endCard;
 	}
-	public Card seeCard_at(int index) {
-		if (index >= 0) {
-			int count = 0;
-			Card card = topCard;
-			while (count < index) {
-				card = card.next;
-				count++;
-			}
-			return card;
-		} else {
-			int count = -1;
-			Card card = endCard;
-			while (count > index) {
-				card = card.prev;
-				count--;
-			}
-			return card;
-		}
-	}
 	public Card remCard_at(int index) {
-		nCards--;
-		if (index >= 0) {
-			int count = 0;
-			Card card = topCard;
-			while (count < index) {
-				card = card.next;
-				count++;
-			}
-			if (card.next == null) {
-				endCard = card.prev;
-			} else {
-				card.next.prev = card.prev;
-			}
-			if (card.prev == null) {
-				topCard = card.next;
-			} else {
-				card.prev.next = card.next;
-			}
-			card.next = null;
-			card.prev = null;
-			return card;
-		} else {
-			int count = -1;
-			Card card = endCard;
-			while (count > index) {
-				card = card.prev;
-				count--;
-			}
-			if (card.next == null) {
-				endCard = card.prev;
-			} else {
-				card.next.prev = card.prev;
-			}
-			if (card.prev == null) {
-				topCard = card.next;
-			} else {
-				card.prev.next = card.next;
-			}
-			card.next = null;
-			card.prev = null;
-			return card;
-		}
+		return remove(getCard_at(index));
 	}
-	// public Card remCardRandom() {	
-	// }
 	public String toString() {
 		String result = "";
 		Card card = topCard;
@@ -130,17 +146,17 @@ class Pile {
 	}
 	public static void main(String[] args) {
 		Pile pile = new Pile();
-		pile.addCard_end(new Card(1,Suit.SPADES));
-		pile.addCard_end(new Card(1,Suit.HEARTS));
-		pile.addCard_end(new Card(2,Suit.HEARTS));
-		pile.addCard_end(new Card(3,Suit.HEARTS));
-		pile.addCard_end(new Card(4,Suit.HEARTS));
-		pile.addCard_end(new Card(5,Suit.HEARTS));
-		pile.addCard_end(new Card(6,Suit.HEARTS));
-		pile.addCard_end(new Card(7,Suit.HEARTS));
-		pile.addCard_end(new Card(8,Suit.HEARTS));
-		pile.addCard_end(new Card(9,Suit.HEARTS));
-		System.out.println(pile.remCard_at(-4));
+		// pile.addCard_sort(new Card(1,Suit.HEARTS));
+		// pile.addCard_sort(new Card(1,Suit.SPADES));
+		pile.addCard_sort(new Card(2,Suit.HEARTS));
+		pile.addCard_sort(new Card(7,Suit.HEARTS));
+		// pile.addCard_sort(new Card(3,Suit.HEARTS));
+		// pile.addCard_sort(new Card(4,Suit.HEARTS));
+		// pile.addCard_sort(new Card(5,Suit.HEARTS));
+		// pile.addCard_sort(new Card(6,Suit.HEARTS));
+		// pile.addCard_sort(new Card(8,Suit.HEARTS));
+		// pile.addCard_sort(new Card(9,Suit.HEARTS));
+		// System.out.println(pile.remCard_at(-4));
 		System.out.println(pile);
 	}
 }

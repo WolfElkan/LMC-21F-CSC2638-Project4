@@ -49,17 +49,32 @@ class Card {
 			yourValue = 14;
 		}
 		if (myValue > yourValue) {
+			// System.out.print(this.toShortString());
+			// System.out.print(" > ");
+			// System.out.println(other.toShortString());
 			return 1;
 		} else if (yourValue > myValue) {
+			// System.out.print(this.toShortString());
+			// System.out.print(" < ");
+			// System.out.println(other.toShortString());
 			return -1;
 		} 
 		int mySuit = this.suitRank();
 		int yourSuit = other.suitRank();
 		if (mySuit > yourSuit) {
+			// System.out.print(this.toShortString());
+			// System.out.print(" > ");
+			// System.out.println(other.toShortString());
 			return 1;
 		} else if (yourSuit > mySuit) {
+			// System.out.print(this.toShortString());
+			// System.out.print(" < ");
+			// System.out.println(other.toShortString());
 			return -1;
 		} else {
+			// System.out.print(this.toShortString());
+			// System.out.print(" = ");
+			// System.out.println(other.toShortString());
 			return 0;
 		}
 	}
@@ -109,7 +124,7 @@ class Card {
 		}
 		return "Nothing";
 	}
-	public int unicode() {
+	private int unicode() {
 		if (value == 0) {
 			return 0x1f0cf; // Black Joker is the only one that renders
 		}
