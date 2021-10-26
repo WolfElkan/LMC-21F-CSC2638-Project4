@@ -31,17 +31,6 @@ class Hand extends Pile {
 		if (_HighCard != 0) return _HighCard;
 		return 0;
 	}
-	// public Card Pair() {
-	// 	Card card = topCard;
-	// 	Card high = topCard;
-	// 	do {
-	// 		card = card.next;
-	// 		if (card.compareTo(high) == 1) {
-	// 			high = card;
-	// 		}
-	// 	} while (card.next != null);
-	// 	return high;		
-	// }
 	public Card Pair() {
 		Card card = topCard;
 		while (card.next != null) {

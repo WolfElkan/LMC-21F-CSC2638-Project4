@@ -7,6 +7,9 @@ class Pile {
 		endCard = null;
 		nCards = 0;
 	}
+	public int numCards() {
+		return nCards;
+	}
 	private Card remove(Card card) {
 		nCards--;
 		if (card.next == null) {
@@ -109,16 +112,7 @@ class Pile {
 				}
 				addCard_behind(card, newCard);
 			}
-			// while (card.compareTo(newCard) == 1) {
-			// 	System.out.println(card);
-			// 	if (card == null) {
-			// 		addCard_end(newCard);
-			// 		break;
-			// 	}
-			// 	addCard_before(card, newCard);
-			// }
 		}
-		// System.out.println(this);
 	}	
 	public Card remCard_top() {
 		return remove(topCard);
@@ -146,16 +140,16 @@ class Pile {
 	}
 	public static void main(String[] args) {
 		Pile pile = new Pile();
-		// pile.addCard_sort(new Card(1,Suit.HEARTS));
-		// pile.addCard_sort(new Card(1,Suit.SPADES));
+		pile.addCard_sort(new Card(1,Suit.HEARTS));
+		pile.addCard_sort(new Card(1,Suit.SPADES));
 		pile.addCard_sort(new Card(2,Suit.HEARTS));
 		pile.addCard_sort(new Card(7,Suit.HEARTS));
-		// pile.addCard_sort(new Card(3,Suit.HEARTS));
-		// pile.addCard_sort(new Card(4,Suit.HEARTS));
-		// pile.addCard_sort(new Card(5,Suit.HEARTS));
-		// pile.addCard_sort(new Card(6,Suit.HEARTS));
-		// pile.addCard_sort(new Card(8,Suit.HEARTS));
-		// pile.addCard_sort(new Card(9,Suit.HEARTS));
+		pile.addCard_sort(new Card(3,Suit.HEARTS));
+		pile.addCard_sort(new Card(4,Suit.HEARTS));
+		pile.addCard_sort(new Card(5,Suit.HEARTS));
+		pile.addCard_sort(new Card(6,Suit.HEARTS));
+		pile.addCard_sort(new Card(8,Suit.HEARTS));
+		pile.addCard_sort(new Card(9,Suit.HEARTS));
 		// System.out.println(pile.remCard_at(-4));
 		System.out.println(pile);
 	}
