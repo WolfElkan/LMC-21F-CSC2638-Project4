@@ -25,52 +25,35 @@ class Hand extends Pile {
 		// if (_ThreeKind != 0) return _ThreeKind;
 		// int _TwoPair = TwoPair().compareTo(other.TwoPair());
 		// if (_TwoPair != 0) return _TwoPair;
-		// int _Pair = Pair().compareTo(other.Pair());
-		// if (_Pair != 0) return _Pair;
+		int _Pair = Pair().compareTo(other.Pair());
+		if (_Pair != 0) return _Pair;
 		int _HighCard = HighCard().compareTo(other.HighCard());
 		if (_HighCard != 0) return _HighCard;
 		return 0;
 	}
-	public Card Pair() {
-		Card card = topCard;
-		Card high = topCard;
-		do {
-			card = card.next;
-			if (card.compareTo(high) == 1) {
-				high = card;
-			}
-		} while (card.next != null);
-		return high;		
-	}
 	// public Card Pair() {
 	// 	Card card = topCard;
 	// 	Card high = topCard;
-	// 	Card pair = topCard;
 	// 	do {
 	// 		card = card.next;
 	// 		if (card.compareTo(high) == 1) {
-	// 			do {
-	// 				pair = pair.next;
-	// 				if (pair.Value() == card.Value()) {
-	// 					high = card;
-	// 					break;
-	// 				}
-	// 			} while (pair.next != null);
+	// 			high = card;
 	// 		}
 	// 	} while (card.next != null);
-	// 	return high;
+	// 	return high;		
 	// }
+	public Card Pair() {
+		Card card = topCard;
+		while (card.next != null) {
+			if (card.value == card.next.value) {
+				return card;
+			}
+			card = card.next;
+		}
+		return new Card(0,Suit.CLUBS);
+	}
 	public Card HighCard() {
 		return topCard;
-		// Card card = topCard;
-		// Card high = topCard;
-		// do {
-		// 	card = card.next;
-		// 	if (card.compareTo(high) == 1) {
-		// 		high = card;
-		// 	}
-		// } while (card.next != null);
-		// return high;
 	}
 	public static void main(String[] args) {
 		Hand hand = new Hand(
@@ -78,15 +61,18 @@ class Hand extends Pile {
 			,new Card(4,Suit.DIAMONDS)
 			,new Card(5,Suit.DIAMONDS)
 			,new Card(2,Suit.HEARTS)
-			,new Card(8,Suit.SPADES)
+			,new Card(5,Suit.SPADES)
 		);
-		// Hand other = new Hand();
 		System.out.println(hand);
-		// other.addCard_end(new Card(6,Suit.DIAMONDS));
-		// other.addCard_end(new Card(4,Suit.SPADES));
-		// other.addCard_end(new Card(7,Suit.CLUBS));
-		// other.addCard_end(new Card(11,Suit.DIAMONDS));
-		// other.addCard_end(new Card(13,Suit.DIAMONDS));
-		// System.out.println(hand.compareTo(other));
+		// System.out.println(hand.Pair());
+		Hand other = new Hand(
+			 new Card(6,Suit.DIAMONDS)
+			,new Card(4,Suit.SPADES)
+			,new Card(7,Suit.CLUBS)
+			,new Card(11,Suit.DIAMONDS)
+			,new Card(13,Suit.DIAMONDS)
+		);
+		System.out.println(other);
+		System.out.println(hand.compareTo(other));
 	}
 }

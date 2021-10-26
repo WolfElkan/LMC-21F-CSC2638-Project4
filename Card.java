@@ -6,8 +6,8 @@ enum Suit {
 }
 
 class Card {
-	private Suit suit;
-	private int value;
+	public Suit suit;
+	public int value;
 	private static String[] values = {
 		"Joker",
 		"Ace",
